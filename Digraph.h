@@ -5,11 +5,12 @@
 #include <iostream>
 #include <sstream>
 
-// adjacent list representation of an undirected graph
-class Graph
+// adjacent list representation of an directed graph
+class Digraph
 { 
     int vertices;
     int edges;
+    std::vector<int> m_indegree; // vertices indegree
 
     using BagIterator = std::vector<int>::iterator;
     using Bag = std::vector<int>;
@@ -26,18 +27,25 @@ class Graph
     }
 
 public:
-    Graph(int V) : vertices(V), edges(0), adjList(V) {}
-    Graph(const Graph& g) : vertices(g.vertices), edges(g.edges), adjList(g.adjList) {}
-    ~Graph() {}
+    Digraph(int V)
+        : vertices(V), edges(0), adjList(V), m_indegree(V)
+    {}
+    Digraph(const Digraph& g) 
+        : vertices(g.vertices),
+          edges(g.edges),
+          adjList(g.adjList),
+          m_indegree(g.m_indegree)
+    {}
+    ~Digraph() {}
     int V() const { return vertices; }
     int E() const { return edges; }
-    int addEdge(int v, int w)
+    int addEdge(int from, int to)
     {
-        validateVertex(v);
-        validateVertex(w);
+        validateVertex(from);
+        validateVertex(to);
         edges++;
-        adjList[v].push_back(w);
-        adjList[w].push_back(v);
+        adjList[from].push_back(to);
+        m_indegree[to]++;
     }
     Bag& adj(int v)
     {
@@ -53,6 +61,24 @@ public:
     {
         validateVertex(v);
         return adjList[v].end();
+    }
+    int indegree(int v)
+    {
+        validateVertex(v);
+        return m_indegree[v];
+    }
+    int outdegree(int v)
+    {
+        validateVertex(v);
+        return adjList[v].size();
+    }
+    Digraph reverse()
+    {
+        Digraph R(vertices);
+        for (int v = 0; v < vertices; v++)
+            for (int w : adjList[v])
+                R.addEdge(w, v);
+        return R;
     }
     std::string toString()
     {
