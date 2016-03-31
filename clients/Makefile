@@ -9,6 +9,9 @@ all: $(TARGETS)
 DepthFirstPaths_cli: DepthFirstPaths_cli.o
 	$(CXX) -o $@ $(CXXFLAGS) $<
 
+BreadthFirstPaths_cli: BreadthFirstPaths_cli.o
+	$(CXX) -o $@ $(CXXFLAGS) $<
+
 DirectedEdge_cli: DirectedEdge_cli.o
 	$(CXX) -o $@ $(CXXFLAGS) $<
 

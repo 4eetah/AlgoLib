@@ -30,7 +30,7 @@ public:
 
     Bag pathTo(int v) {
         if (!hasPathTo(v)) return Bag();
-        std::vector<int> stack;
+        Bag stack;
         for (int x = v; x != source; x = edgeTo[x])
             stack.push_back(x);
         stack.push_back(source);
