@@ -1,10 +1,13 @@
-CXXFLAGS=-I../ -std=c++11
+CXXFLAGS=-I../ -std=c++11 -g
 
 SRCS=$(shell find -name "*cpp" -exec basename '{}' \;)
 OBJS=$(SRCS:%.cpp=%.o)
 TARGETS=$(SRCS:%.cpp=%)
 
 all: $(TARGETS)
+
+CC_cli: CC_cli.o
+	$(CXX) -o $@ $(CXXFLAGS) $<
 
 DepthFirstPaths_cli: DepthFirstPaths_cli.o
 	$(CXX) -o $@ $(CXXFLAGS) $<
