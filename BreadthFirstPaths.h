@@ -9,12 +9,18 @@ class BreadthFirstPaths
     std::vector<bool> marked;
     Bag edgeTo; 
     Bag m_distTo;
-    const int source;
+
 public:
     BreadthFirstPaths(Graph& G, int s)
-    : source(s), marked(G.V()), edgeTo(G.V()), m_distTo(G.V(), INT_MAX)
+    : marked(G.V()), edgeTo(G.V()), m_distTo(G.V(), INT_MAX)
     {
         bfs(G, s);
+    }
+    
+    BreadthFirstPaths(Graph& G, const Bag& sources)
+    : marked(G.V()), edgeTo(G.V()), m_distTo(G.V(), INT_MAX)
+    {
+        bfs(G, sources);
     }
 
     void bfs(Graph& G, int s) {
@@ -68,9 +74,10 @@ public:
     Bag pathTo(int v) {
         if (!hasPathTo(v)) return Bag();
         Bag stack;
-        for (int x = v; x != source; x = edgeTo[x])
+        int x;
+        for (x = v; m_distTo[x] != 0; x = edgeTo[x])
             stack.push_back(x);
-        stack.push_back(source);
+        stack.push_back(x);
         std::reverse(stack.begin(), stack.end());
         return stack;
     }

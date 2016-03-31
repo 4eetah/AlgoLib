@@ -1,4 +1,4 @@
-#include "../DirectedEdge.h"
+#include "DirectedEdge.h"
 #include <iostream>
 #include <fstream>
 

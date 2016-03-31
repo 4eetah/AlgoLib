@@ -1,4 +1,4 @@
-#include "../Edge.h"
+#include "Edge.h"
 #include <iostream>
 #include <fstream>
 

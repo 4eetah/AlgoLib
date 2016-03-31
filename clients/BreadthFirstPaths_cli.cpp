@@ -2,19 +2,18 @@
 #include "BreadthFirstPaths.h"
 #include <iostream>
 #include <fstream>
+#include <vector>
 
 using namespace std;
 
 int main(int argc, char** argv)
 {
-    if (argc != 3)
-    {
-        cerr << "Using: ./main [GraphInputFile] [sourceVertex]\n";
+    if (argc < 3) {
+        cerr << "Using: ./main GraphInputFile [sourceVertex...]\n";
         exit(1);
     }
     fstream fin(argv[1]);
-    if (!fin.is_open())
-    {
+    if (!fin.is_open()) {
         cerr << "Can't open " << argv[1] << endl;
         exit(1);
     }
@@ -24,9 +23,7 @@ int main(int argc, char** argv)
     int E = stoi(wstr);
     int sourceVertex = stoi(argv[2]);
     Graph graph(V);
-    for (int i = 0; i < V; i++)
-    {
-
+    for (int i = 0; i < V; i++) {
         fin >> vstr >> wstr;
         int v = stoi(vstr);
         int w = stoi(wstr);
@@ -34,13 +31,17 @@ int main(int argc, char** argv)
     }
     cout << graph.toString();
 
-    BreadthFirstPaths bfs(graph, sourceVertex);
+    std::vector<int> sources;
+    for (int i = 2; i < argc; ++i)
+        sources.push_back(stoi(argv[i]));
+    BreadthFirstPaths bfs(graph, sources);
+
     std::cout << "\nChecking paths from source:\n";
     for (int v = 0; v < graph.V(); ++v) {
         if (bfs.hasPathTo(v)) {
             std::cout << sourceVertex << " to " << v << " : ";
             auto path = bfs.pathTo(v);
-            for (int w : path)
+            for (auto w : path)
                 if (w == sourceVertex)
                     std::cout << w;
                 else
