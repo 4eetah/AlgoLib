@@ -12,6 +12,9 @@ CC_cli: CC_cli.o
 DepthFirstPaths_cli: DepthFirstPaths_cli.o
 	$(CXX) -o $@ $(CXXFLAGS) $<
 
+DepthFirstDirectedPaths_cli: DepthFirstDirectedPaths_cli.o
+	$(CXX) -o $@ $(CXXFLAGS) $<
+
 BreadthFirstPaths_cli: BreadthFirstPaths_cli.o
 	$(CXX) -o $@ $(CXXFLAGS) $<
 
