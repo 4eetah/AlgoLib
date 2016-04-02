@@ -1,4 +1,6 @@
+#pragma once
 #include <vector>
+#include "Graph.h"
 
 /*
  * Find a cycle in an undirected graph
@@ -20,8 +22,10 @@ public:
 
         edgeTo.reserve(G.V());
         for (int v = 0; v < G.V(); ++v)
-            if (!marked[v])
-                if (dfs(G, -1, v)) return;
+            if (!marked[v] && !hasCycle())
+                dfs(G, -1, v);
+            else
+                return;
     }
     
     bool hasSelfLoop(Graph& G) {
@@ -60,10 +64,10 @@ public:
         return m_cycle;
     }
 
-    bool dfs(Graph& G, int u, int v) {
+    void dfs(Graph& G, int u, int v) {
         marked[v] = true;        
         for (int w : G.adj(v)) {
-            if (!m_cycle.empty()) return true;
+            if (!m_cycle.empty()) return;
             if (!marked[w]) {
                 edgeTo[w] = v;
                 dfs(G, v, w);
@@ -72,9 +76,7 @@ public:
                     m_cycle.push_back(x);
                 m_cycle.push_back(w);
                 m_cycle.push_back(v);
-                return true;
             }
         }
-        return false;
     }
 };

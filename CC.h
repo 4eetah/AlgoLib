@@ -1,3 +1,4 @@
+#pragma once
 /* Allow to find connected components in an undirected graph 
  * in constant time after making preprocessing in constructor.
  * This implementation uses depth first search for graph detour.
