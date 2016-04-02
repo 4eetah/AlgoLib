@@ -18,6 +18,9 @@ DepthFirstDirectedPaths_cli: DepthFirstDirectedPaths_cli.o
 BreadthFirstPaths_cli: BreadthFirstPaths_cli.o
 	$(CXX) -o $@ $(CXXFLAGS) $<
 
+BreadthFirstDirectedPaths_cli: BreadthFirstDirectedPaths_cli.o
+	$(CXX) -o $@ $(CXXFLAGS) $<
+
 DirectedEdge_cli: DirectedEdge_cli.o
 	$(CXX) -o $@ $(CXXFLAGS) $<
 

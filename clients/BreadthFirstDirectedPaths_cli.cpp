@@ -1,5 +1,5 @@
-#include "Graph.h"
-#include "BreadthFirstPaths.h"
+#include "Digraph.h"
+#include "BreadthFirstDirectedPaths.h"
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -9,7 +9,7 @@ using namespace std;
 int main(int argc, char** argv)
 {
     if (argc < 3) {
-        cerr << "Using: ./main GraphInputFile sourceVertex...\n";
+        cerr << "Using: ./main DigraphInputFile sourceVertex...\n";
         exit(1);
     }
     fstream fin(argv[1]);
@@ -22,7 +22,7 @@ int main(int argc, char** argv)
     int V = stoi(vstr); 
     int E = stoi(wstr);
     int sourceVertex = stoi(argv[2]);
-    Graph graph(V);
+    Digraph graph(V);
     for (int i = 0; i < V; i++) {
         fin >> vstr >> wstr;
         int v = stoi(vstr);
@@ -34,7 +34,7 @@ int main(int argc, char** argv)
     std::vector<int> sources;
     for (int i = 2; i < argc; ++i)
         sources.push_back(stoi(argv[i]));
-    BreadthFirstPaths bfs(graph, sources);
+    BreadthFirstDirectedPaths bfs(graph, sources);
 
     std::cout << "\nChecking paths from source:\n";
     for (int v = 0; v < graph.V(); ++v) {
