@@ -5,7 +5,7 @@ class DepthFirstDirectedPaths
 {
     using Bag = std::vector<int>;
     std::vector<bool> marked;
-    Bag edgeTo; 
+    std::vector<int> edgeTo; 
     const int source;
 public:
     DepthFirstDirectedPaths(Digraph& G, int s)

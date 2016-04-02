@@ -5,7 +5,7 @@ class DepthFirstPaths
 {
     using Bag = std::vector<int>;
     std::vector<bool> marked;
-    Bag edgeTo; 
+    std::vector<int> edgeTo; 
     const int source;
 public:
     DepthFirstPaths(Graph& G, int s)

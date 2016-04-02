@@ -7,8 +7,8 @@ class BreadthFirstDirectedPaths
 {
     using Bag = std::vector<int>;
     std::vector<bool> marked;
-    Bag edgeTo; 
-    Bag m_distTo;
+    std::vector<int> edgeTo; 
+    std::vector<int> m_distTo;
 
 public:
     BreadthFirstDirectedPaths(Digraph& G, int s)
