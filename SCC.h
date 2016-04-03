@@ -1,12 +1,12 @@
 #pragma once
 #include "Digraph.h"
 #include "DepthFirstOrder.h"
+#include <vector>
 
 /*
- * Finds strong connected components
+ * Finds strongly connected components
  * in a directed graph
  */
-
 class SCC
 {
     std::vector<bool> marked;
