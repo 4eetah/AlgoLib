@@ -91,3 +91,13 @@ void quickSort(vector<T>& v)
     quickSort(v, 0, v.size()-1);
 }
 /* Quick sort */
+
+/* indexed "remove duplicates" from sorted array */
+template <typename T>
+int iunique(vector<T>& v)
+{
+    int i = !v.empty();
+    for (T n : v)
+        if (n != v[i-1]) v[i++] = n;
+    return i;
+}
