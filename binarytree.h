@@ -1,5 +1,6 @@
 #include <stack>
 #include <queue>
+#include <vector>
 
 template <typename T>
 struct btnode {
@@ -77,3 +78,37 @@ void btraverse(btnode *root, void (*visit)(btnode*))
         if (n->left) q.push(n->left);
     }
 }
+
+/* miscellaneous procedures */
+int count(btnode *root)
+{
+    if (!root) return 0;
+    return count(root->left) + count(root->right) + 1;
+}
+
+int height(btnode *root)
+{
+    if (!root) return -1;
+    int u = height(root->left);
+    int v = height(root->right);
+    return u > v ? u + 1 : v + 1;
+}
+
+/* return container of tree's levels */
+static void levels_helper(btnode *root, vector<vector<int>>& res, int lvl)
+{
+    if (!root) return;
+    if (res.size() == lvl) res.push_back({root->val});
+    else res[lvl].push_back(root->val);
+    dfs(root->left, res, lvl + 1);
+    dfs(root->right, res, lvl + 1);
+}
+
+vector<vector<int>> levels(btnode *root)
+{
+    if (!root) return vector<vector<int>>();
+    vector<vector<int>> res;
+    dfs(root, res, 0);
+    return res;
+}
+/***/
