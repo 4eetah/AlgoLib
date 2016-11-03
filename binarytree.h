@@ -95,20 +95,64 @@ int height(btnode *root)
 }
 
 /* return container of tree's levels */
-static void levels_helper(btnode *root, vector<vector<int>>& res, int lvl)
+template <typename T>
+static void levels_helper(btnode *root, vector<vector<T>>& res, int lvl)
 {
     if (!root) return;
     if (res.size() == lvl) res.push_back({root->val});
     else res[lvl].push_back(root->val);
-    dfs(root->left, res, lvl + 1);
-    dfs(root->right, res, lvl + 1);
+    levels_helper(root->left, res, lvl + 1);
+    levels_helper(root->right, res, lvl + 1);
 }
 
-vector<vector<int>> levels(btnode *root)
+template <typename T>
+vector<vector<T>> levels(btnode *root)
 {
-    if (!root) return vector<vector<int>>();
-    vector<vector<int>> res;
-    dfs(root, res, 0);
+    vector<vector<T>> res;
+    if (!root) return res;
+    levels_helper(root, res, 0);
     return res;
+}
+/***/
+
+/* return container of tree's paths */
+template <typename T>
+static void paths_helper(btnode *root, vector<vector<T>>& res, vector<T>& cur)
+{
+    cur.push_back(root->val);
+    if (!(root->left || root->right)) {
+        res.push_back(cur);
+        cur.pop();
+        return;
+    }
+    if (root->left) paths_helper(root->left, res, cur);
+    if (root->ritght) paths_helper(root->right, res, cur);
+    cur.pop();
+}
+
+template <typename T>
+vector<vector<T>> paths(btnode *root)
+{
+    vector<vector<T>> res;
+    if (!root) return res;
+    paths_helper(root, res, cur);
+    return res;
+}
+/***/
+
+/* determine if the tree has a root-to-leaf path with specified sum */
+template <typename T>
+static bool godeeper(btnode *root, T sum, T cur)
+{
+    if (!root) return false;
+    if (!(root->left || root->right))
+        return (cur + root->val) == sum;
+    return godeeper(root->left, sum, cur + root->val) ||
+           godeeper(root->right, sum, cur + root->val);
+}
+
+bool haspathsum(btnode *root, T sum)
+{
+    return godeeper(root, sum, 0);
 }
 /***/
