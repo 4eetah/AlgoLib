@@ -1,5 +1,6 @@
 #include <utility>
 #include <limit.h>
+#include <set>
 
 template <typename T>
 struct lnode {
@@ -155,3 +156,44 @@ lnode *middle_pre(lnode *head)
     }
     return slow;
 }
+
+/* Find the intersection node of two lists ([3] in the following ex.):
+ *      [1]->[2]-\
+ *               [3]->[7]->[8]->NULL 
+ * [4]->[5]->[6]-/
+ * The idea is to swap pointers once each of them reaches the end,
+ * so that eventually they lined up
+ */
+lnode *intersection(lnode* heada, lnode *headb)
+{
+    lnode *pa = heada, *pb = headb;
+    while (pa && pb && pa != pb) {
+        pa = pa->next;
+        pb = pb->next;
+        /* either collided or both reached end of lists(pa == pb == NULL) */
+        if (pa == pb) return pa;
+        
+        if (!pa) pa = headb;
+        if (!pb) pb = heada;
+    }
+    return pa;
+}
+/* same, but solved by means of using set */
+lnode *intersection_set(lnode *heada, lnode *headb)
+{
+    set<lnode*> s;
+    while (heada || headb) {
+        if (heada) {
+            if (!s.insert(heada).second)
+                return heada;
+            heada = heada->next;
+        }
+        if (headb) {
+            if (!s.insert(headb).second)
+                return headb;
+            headb = headb->next;
+        }
+    }
+    return NULL;
+}
+/***/
